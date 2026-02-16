@@ -4,6 +4,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import com.minna.medislotapp.data.SampleData
 import com.minna.medislotapp.models.Appointment
+import com.minna.medislotapp.models.AppointmentStatus
 
 /**
  * AppointmentViewModel
@@ -53,7 +54,11 @@ class AppointmentViewModel : ViewModel() {
      * Used when the user presses "Cancel".
      * UI automatically updates due to state observation.
      */
-    fun removeAppointment(appointment: Appointment) {
-        _appointments.remove(appointment)
+    fun cancelAppointment(appointment: Appointment) {
+        val index = _appointments.indexOf(appointment)
+        if (index != -1) {
+            _appointments[index] =
+                appointment.copy(status = AppointmentStatus.CANCELLED)
+        }
     }
 }

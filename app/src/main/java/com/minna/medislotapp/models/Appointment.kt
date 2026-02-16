@@ -22,5 +22,24 @@ data class Appointment(
     val doctorSpecialty: String,
 
     // Clinic location name
-    val clinic: String
+    val clinic: String,
+
+    // Default status property inside Appointment data class
+// This means every new appointment will automatically start as UPCOMING
+    val status: AppointmentStatus = AppointmentStatus.UPCOMING
 )
+
+
+// Enum class defines the ONLY allowed status values for an appointment
+// Using enum instead of String prevents spelling mistakes and invalid values
+enum class AppointmentStatus {
+
+    // Appointment is scheduled and not yet completed
+    UPCOMING,
+
+    // Appointment has already happened
+    COMPLETED,
+
+    // Appointment was cancelled by the user
+    CANCELLED
+}

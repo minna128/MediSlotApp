@@ -25,7 +25,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.minna.medislotapp.data.SampleData.appointments
 import com.minna.medislotapp.models.Appointment
+import com.minna.medislotapp.models.AppointmentStatus
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
@@ -189,6 +191,10 @@ private fun AnimatedAppointmentCard(
 ) {
     var visible by remember { mutableStateOf(true) }
     val scope = rememberCoroutineScope()
+    val upcomingAppointments =
+        appointments.filter { it.status ==
+                AppointmentStatus.UPCOMING }
+
 
     AnimatedVisibility(
         visible = visible,
@@ -212,9 +218,9 @@ private fun AnimatedAppointmentCard(
     }
 }
 @Composable
-private fun AppointmentCard(
+fun AppointmentCard(
     appointment: Appointment,
-    onCancelClick: () -> Unit
+    onCancelClick: (() -> Unit)?
 ) {
 
     // Card component (required in marking scheme)
@@ -264,21 +270,29 @@ private fun AppointmentCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Cancel button
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+
+            // Cancel button (only for upcoming appointments)
+            if (appointment.status == AppointmentStatus.UPCOMING &&
+                onCancelClick != null
             ) {
-                TextButton(onClick = onCancelClick) {
-                    Text(
-                        text = "Cancel",
-                        color = MaterialTheme.colorScheme.error
-                    )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(
+                        onClick = onCancelClick
+                    ) {
+                        Text(
+                            text = "Cancel",
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    }
                 }
             }
         }
+        }
     }
-}
+
 
 @Composable
 private fun ScreenHeader() {

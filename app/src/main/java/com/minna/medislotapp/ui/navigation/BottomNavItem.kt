@@ -4,6 +4,7 @@ package com.minna.medislotapp.ui.navigation
 // It acts as a single source of truth for bottom navigation routes.
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocalHospital
 import androidx.compose.material.icons.filled.Person
@@ -41,5 +42,14 @@ sealed class BottomNavItem(
         route = "profile",
         label = "Profile",
         icon = Icons.Default.Person
+    )
+
+
+    // Appointments bottom navigation item
+// route must match NavHost composable route exactly
+    object Appointments : BottomNavItem(
+        route = "appointments",               // Navigation route
+        label = "Appointments",               // Text shown below icon
+        icon = Icons.Default.CalendarToday    // Icon shown in bottom nav
     )
 }

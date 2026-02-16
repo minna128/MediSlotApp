@@ -27,7 +27,7 @@ fun AppNavGraph() {
     val appointmentViewModel: AppointmentViewModel = viewModel()
 
     // These screens will show the bottom navigation bar
-    val mainScreenRoutes = setOf("home", "doctors", "profile")
+    val mainScreenRoutes = setOf("home", "doctors", "appointments", "profile")
 
     // Observe current route to decide when to show bottom nav
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -68,7 +68,7 @@ fun AppNavGraph() {
 
                     // When cancel is clicked → remove from ViewModel
                     onCancel = { appointment ->
-                        appointmentViewModel.removeAppointment(appointment)
+                        appointmentViewModel.cancelAppointment(appointment)
                     }
                 )
             }
@@ -77,6 +77,16 @@ fun AppNavGraph() {
 
             composable("doctors") {
                 DoctorsScreen(navController)
+            }
+
+            // ---------------- APPOINTMENTS SCREEN ----------------
+            composable("appointments") {
+                AppointmentsScreen(
+                    appointments = appointmentViewModel.appointments,
+                    onCancel = { appointment ->
+                        appointmentViewModel.cancelAppointment(appointment)
+                    }
+                )
             }
 
             // ---------------- PROFILE SCREEN ----------------
