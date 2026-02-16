@@ -28,6 +28,7 @@ import androidx.navigation.NavController
 import com.minna.medislotapp.models.Appointment
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 
 
 @Composable
@@ -186,28 +187,30 @@ private fun AnimatedAppointmentCard(
     appointment: Appointment,
     onCancel: () -> Unit
 ) {
-
-    // Controls visibility of the card
     var visible by remember { mutableStateOf(true) }
+    val scope = rememberCoroutineScope()
 
     AnimatedVisibility(
         visible = visible,
         exit = shrinkVertically(
-            animationSpec = tween(300)
+            animationSpec = tween(800)
         ) + fadeOut(
-            animationSpec = tween(300)
+            animationSpec = tween(800)
         )
     ) {
         AppointmentCard(
             appointment = appointment,
             onCancelClick = {
-                visible = false  // Trigger animation
-                onCancel()       // Remove from list
+                visible = false
+
+                scope.launch {
+                    delay(800)   // Wait for animation to finish
+                    onCancel()
+                }
             }
         )
     }
 }
-
 @Composable
 private fun AppointmentCard(
     appointment: Appointment,

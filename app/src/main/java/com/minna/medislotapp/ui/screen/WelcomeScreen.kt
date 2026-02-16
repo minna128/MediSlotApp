@@ -20,6 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.minna.medislotapp.ui.theme.MediSlotAppTheme
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
+import com.minna.medislotapp.R
 
 @Composable
 fun WelcomeScreen(navController: NavController) {
@@ -35,6 +39,8 @@ fun WelcomeScreen(navController: NavController) {
             contentAlignment = Alignment.Center
         ) {
 
+
+
             // Column arranges items vertically
             Column(
                 modifier = Modifier
@@ -48,6 +54,16 @@ fun WelcomeScreen(navController: NavController) {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
+
+                //Add Logo
+                Image(
+                    painter = painterResource(id = R.drawable.medislot_logo),
+                    contentDescription = "App Logo",
+                    modifier = Modifier
+                        .size(140.dp)
+                        .padding(bottom = 16.dp),
+                    contentScale = ContentScale.Fit
+                )
 
                 // App Title
                 Text(
